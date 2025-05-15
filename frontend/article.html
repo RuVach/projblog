@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Стаття</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <div id="article-content"></div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    fetch(`http://localhost:8000/articles/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("article-content").innerHTML = `
+          <h1>${data.title}</h1>
+          <p>${data.content}</p>
+        `;
+      })
+      .catch(() => {
+        document.getElementById("article-content").innerHTML = "<p>Статтю не знайдено 😢</p>";
+      });
+  </script>
+</body>
+</html>
